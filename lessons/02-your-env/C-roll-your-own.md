@@ -403,70 +403,6 @@ done
 <br>
 <br>
 
-## Lets create neovim installation
-Lets do what we did in ansible but for the neovim script
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-## Expected Code
-This is for `runs/neovim`
-
-```bash
-version="v0.10.2"
-if [ ! -z $NVIM_VERSION ]; then
-    version="$NVIM_VERSION"
-fi
-
-echo "version: \"$version\""
-
-# neovim btw
-if [ ! -d $HOME/neovim ]; then
-    git clone https://github.com/neovim/neovim.git $HOME/neovim
-    sudo apt -y install cmake gettext lua5.1 liblua5.1-0-dev
-fi
-
-git -C ~/neovim fetch --all
-git -C ~/neovim checkout $version
-
-make -C ~/neovim clean
-make -C ~/neovim CMAKE_BUILD_TYPE=RelWithDebInfo
-sudo make -C ~/neovim install
-```
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
 ## Boom!
 We now have a script that is easily extensible for setting up our environment
 
@@ -521,7 +457,7 @@ You `export DRY_RUN` during the dry run checks and then run every script and
 let your scripts be the ones that tell you what it would be doing instead of
 doing it.
 
-I just find that amount of logic though nice can also be a huge pain
+I just find that amount of logic is nice on paper but a huge pain in practice
 
 <br>
 <br>
