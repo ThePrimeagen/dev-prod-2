@@ -17,6 +17,12 @@ a massive advantage in developer life.
 
 <br>
 <br>
+
+Another reality of dev'ing is that for a while a single tool will be so useful,
+then you wont use it again for months.  This has been my relationship with jq.
+Its ok, you will forget the practical part, but you wont forget what you can do
+as you learn these tools.
+
 <br>
 <br>
 <br>
@@ -32,4 +38,7 @@ a massive advantage in developer life.
 <br>
 <br>
 <br>
+<br>
+<br>
+
 
