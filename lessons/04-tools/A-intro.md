@@ -41,4 +41,24 @@ as you learn these tools.
 <br>
 <br>
 
+## Note for FZF
+We already installed used it, so... its on the list of tools you should know
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
