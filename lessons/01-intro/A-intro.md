@@ -70,9 +70,10 @@ The name is ThePrimeagen
 <br>
 
 ## The Goal
-My approach to your environment
+My approach to _my environment_.
 
-or as i like to say: there isn't a right way, but there is my way and its pretty good
+or as i like to say: there isn't a right way, but there is my way and its
+pretty good.  I only have one thing I optimize which is productivity.
 
 <br>
 <br>
@@ -94,10 +95,9 @@ or as i like to say: there isn't a right way, but there is my way and its pretty
 
 ## A bit of prereq
 One thing that should be apparent is that i will be approaching this class from
-a unix perspective (and i am sure there is going to be some linux only things
-too).
+a unix perspective.
 
-Its not that i don't think windows is good for dev, its just i never use it for
+Its not that i don't think windows is good for dev, its just I never use it for
 anything but games.
 
 <br>

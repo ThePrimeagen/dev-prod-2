@@ -4,7 +4,7 @@ description: "ansible"
 ---
 
 ## Ansible
-Now a long running way i have been using to manage my dotfiles have been
+Now a long running way I have been using to manage my dotfiles have been
 exclusively through ansible.  There are several pluses to managing through
 ansible and there are some negatives
 
@@ -36,7 +36,7 @@ ansible and there are some negatives
 * it can be hard to make it work for certain tasks, such as installing neovim
   plugins
 * tags can be great and super annoying
-* its not obvious how to reverse operations
+* yaml sucks
 
 <br>
 <br>
@@ -59,9 +59,6 @@ ansible and there are some negatives
 ## Basic Ansible
 lets create a simple ansible script to clone neovim from source and build it
 from a specific tagged version
-
-everything in this section can be found
-[here](git@github.com:ThePrimeagen/ansible-neovim-example.git)
 
 <br>
 <br>
@@ -160,9 +157,6 @@ work is done
 
 <br>
 <br>
-
-<br>
-<br>
 <br>
 <br>
 <br>
@@ -188,7 +182,7 @@ contents of neovim to a directory in a directory of our choosing
 * input the following
 
 ```
-- name: My first play
+- name: My first playbook
   hosts: localhost
   tasks:
 ```
@@ -274,11 +268,13 @@ But where do we put the code we find?  Well... remember that empty `tasks` key?
 
 
 ```yaml
-  - name: Clone a repo with separate git directory
+- name: My first playbook
+  hosts: localhost
+  tasks:
+  - name: Git neovim
     ansible.builtin.git:
       repo: "https://github.com/neovim/neovim.git"
-      dest: "{{dest_dir}}/neovim"
-      single_branch: yes
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim"
       version: v0.10.2
 ```
 
@@ -306,67 +302,58 @@ this correctly you will first want to build neovim by hand and keep track of
 the libraries that you need.  There is likely a list of requirements in the
 [BUILD.md](https://github.com/neovim/neovim/blob/master/BUILD.md)
 
-### To make neovim
-The command to run to make neovim is the following:
-
-```
-cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
-```
-
-Now this will likely error with some missing library such as gettext or lua
-
-<br>
-<br>
-
+### Making neovim requires packages
 Here are the packages i needed to install from apt to get neovim
 
 ```
 sudo apt install cmake gettext lua5.1 liblua5.1-0-dev
 ```
 
-once i have those packages i was able to install neovim fully from source.  Now
-yours will be different than mine because you may be on a mac or a different
-flavor of linux.
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-## Translation time
-Lets translate what i installed into an ansible command
+### Lets get the libraries first
+Lets translate what I installed into an ansible command.
 
 * google how to ansible apt
 * copy the proper command
-* show them how to use vars inside a task!
 
-### Expected task
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Expected Code
+Your code should look something like this
 
 ```yaml
-  - name: "Install neovim deps"
+- name: My first playbook
+  hosts: localhost
+  tasks:
+  - name: Git neovim
+    ansible.builtin.git:
+      repo: "https://github.com/neovim/neovim.git"
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim"
+      version: v0.10.2
+
+  - name: Install helping libs
     become: true
-    apt:
-      name: "{{ packages }}"
-      state: present
-    vars:
-      packages:
-      - cmake
-      - gettext
+    ansible.builtin.apt:
+      pkg:
       - lua5.1
       - liblua5.1-0-dev
+      - cmake
+      - gettext
 ```
 
 <br>
@@ -397,23 +384,70 @@ process
 * ...
 * neovim (which is profit)!
 
+### To make neovim (from BUILD.md)
+The command to run to make neovim is the following:
+
+```bash
+cd neovim && make CMAKE_BUILD_TYPE=RelWithDebInfo
+```
+
+then to install it we need to execute
+
+```bash
+sudo make install
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 
-### Expected output
+## Expected output
 ```yaml
-  - name: make neovim
+- name: My first playbook
+  hosts: localhost
+  tasks:
+  - name: Git neovim
+    ansible.builtin.git:
+      repo: "https://github.com/neovim/neovim.git"
+      dest: "{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim"
+      version: v0.9.4
+
+  - name: Install helping libs
+    become: true
+    ansible.builtin.apt:
+      pkg:
+      - lua5.1
+      - liblua5.1-0-dev
+      - cmake
+      - gettext
+
+  - name: neovim
     make:
-      chdir: "{{dest_dir}}/neovim"
+      chdir: "{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim"
       params:
-        CMAKE_BUILD_TYPE: RelWithDebInfo
+        CMAKE_BUILD_TYPE: "RelWithDebInfo"
 
-  - name: make install neovim
-    become: yes
+  - name: neovim install
+    become: true
     make:
-      chdir: "{{dest_dir}}/neovim"
       target: install
-
+      chdir: "{{ lookup('ansible.builtin.env', 'HOME') }}/personal/neovim"
 ```
 
 <br>
@@ -476,50 +510,7 @@ do it, you can type in those creds before installing by using the -K flag
 <br>
 <br>
 
-## Putting it all together
-
-The complete script looks like:
-
-```yaml
-- name: The Great Neovim editor
-  hosts: localhost
-  vars:
-    dest_dir: "{{ lookup('pipe', 'pwd') }}"
-
-  tasks:
-  - name: Clone a repo with separate git directory
-    ansible.builtin.git:
-      repo: "https://github.com/neovim/neovim.git"
-      dest: "{{dest_dir}}/neovim"
-      single_branch: yes
-      version: v0.10.2
-
-  - name: "Install neovim deps"
-    become: true
-    apt:
-      name: "{{ packages }}"
-      state: present
-    vars:
-      packages:
-      - cmake
-      - gettext
-      - lua5.1
-      - liblua5.1-0-dev
-
-  - name: make neovim
-    make:
-      chdir: "{{dest_dir}}/neovim"
-      params:
-        CMAKE_BUILD_TYPE: RelWithDebInfo
-
-  - name: make install neovim
-    become: yes
-    make:
-      chdir: "{{dest_dir}}/neovim"
-      target: install
-
-```
-
+## And that is ansible
 that is what it takes to create neovim ansible.
 
 <br>
@@ -527,9 +518,10 @@ that is what it takes to create neovim ansible.
 
 ### Why would i use this over a bash script
 A bash script is great when you can execute it on a machine, but ansible allows
-you to execute all these operations on a bunch of host machines at once.  It
-also allows for some custom logic based on operating system so you could
-interchange out the fetching mechanism to make it machine independent
+you to execute all these operations on a bunch of host machines at once, your
+machine, uniform syntax (yml).  It also allows for some custom logic based on
+operating system so you could interchange out the fetching mechanism to make it
+machine independent
 
 <br>
 <br>

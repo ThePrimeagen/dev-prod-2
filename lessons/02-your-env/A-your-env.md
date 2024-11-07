@@ -7,7 +7,9 @@ description: "lets take a tour"
 So for me, when i say environment what i mean is everything surrounding the
 development process.
 
-That means tmux, i3, vim, neovim, vscode, zed, core utils, etc etc
+How you install your favorite libraries
+How you interact with your operating system to get you where you want to be
+How you arrange your windows
 
 <br>
 <br>
@@ -28,11 +30,9 @@ That means tmux, i3, vim, neovim, vscode, zed, core utils, etc etc
 <br>
 
 ## The most important starting place
-to start is the hydration of your environment with all of your custom scripts,
-your favorite utils, code editors, and other software
-
-I am going to talk about a couple of tools that i have used in the past then we
-are going to hand roll our own
+If you were given a brand new system how long does it take you set up?  I would
+venture that most people spend a day getting ready to go followed by another
+couple days patching the holes.
 
 <br>
 <br>

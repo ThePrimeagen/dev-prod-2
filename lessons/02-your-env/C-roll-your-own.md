@@ -13,7 +13,16 @@ I love reinventing the wheel.  There are many reasons why i like doing it too!
 
 That is ok.  Its ok that you have to recreate something that exists in some
 form.  Its ok because you will understand it much better and you may end up
-creating something that is way more useful to you
+creating something that is way more useful to you,
+
+<br>
+<br>
+
+### or you will gain
+* a new appreciation of what it takes to create software
+* learn a bunch about the topic along the way
+* become a better engineer yourself
+* never do that again!  Meaning you will now be able to guage problems more accurately
 
 <br>
 <br>
