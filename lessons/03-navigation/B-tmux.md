@@ -9,24 +9,6 @@ centered around navigation.
 
 * to gimp! *
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
 ## What I Want
 1. sessions that last even when i close my terminal
 1. multiple running sessions, and these sessions are based on directory
@@ -54,9 +36,10 @@ centered around navigation.
 <br>
 
 ## I Choose Tmux
-I personally use tmux + ghostty, though i hear wezterm, the terminal emulator,
-you can emulate pretty much every way I use tmux.  I have not used wezterm so i
-cannot speak much about it. (Zellij has similar experience)
+I personally use tmux + ghostty, though i hear wezterm, another terminal
+emulator, you can emulate pretty much every way I use tmux.  I have not used
+wezterm so i cannot speak much about it. Zellij has similar experience but more
+modern
 
 <br>
 <br>

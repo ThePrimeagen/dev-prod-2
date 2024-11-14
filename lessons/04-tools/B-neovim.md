@@ -82,6 +82,64 @@ normal.  But i do want to warn you about 2 things.
 <br>
 <br>
 
+## Lets go over some of the motions
+Perhaps to give you a taste, lets go over some of the motions and why its
+amazing.
+
+We can also go over some of the awesome remaps that i have dev'd / been given
+over the last few years.
+
+* motions
+* qfix
+* harpoon
+* navigation
+* macros
+* commands
+* help
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## But why neovim?
+We get the best of both worlds, a modern IDE and vim motions.  Why would I ever
+use neovim?
+
+* defense for neovim
+* the bonus of using neovim that isn't quite the same with other editors
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 ## Lets play with the neovim api
 
 <br>
@@ -148,6 +206,52 @@ end, 5000)
 ## There is so much more
 that was just a taste and there is so much more.  I highly recommend playing
 around with the apis and making anything that you want.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## A quick note about AI
+One really nice thing about neovim is that the api is so well documented and
+the surface area so well defined that you can often one shot exactly what you
+need with neovim and chatgpt.
+
+this isn't always the case, it still makes up stuff ~5% of the time, but its
+close.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## VimBeGood
 
 <br>
 <br>

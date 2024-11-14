@@ -30,6 +30,7 @@ ansible and there are some negatives
 * there is tons of online documentation
 * its used more than just managing dotfiles
 * ansible vault allows for plain storage of ssh keys!  which is really cool
+* you can also store a bunch of other cool stuff with ansible vault (think auth passcodes)
 
 ## Cons
 * it can be terribly slow
@@ -147,7 +148,26 @@ nodes (machines).  The playbook is the heart of ansible
 <br>
 <br>
 
-Since we are operating on our own machine we wont need the inventory part
+As a friend once said
+> ansible is the helicopter that drops godzilla
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> ... godzilla being k8s
+
+<br>
+<br>
+
+Since we are operating on our own machine we wont need the inventory part, its
+just `localhost`
 
 <br>
 <br>
@@ -181,7 +201,7 @@ contents of neovim to a directory in a directory of our choosing
 * create a file called `neovim.yml`
 * input the following
 
-```
+```yml
 - name: My first playbook
   hosts: localhost
   tasks:
@@ -264,7 +284,25 @@ too much usage of odd features like scripting
 
 But where do we put the code we find?  Well... remember that empty `tasks` key?
 
-### expected task output
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Expected Task Output
 
 
 ```yaml
@@ -305,7 +343,7 @@ the libraries that you need.  There is likely a list of requirements in the
 ### Making neovim requires packages
 Here are the packages i needed to install from apt to get neovim
 
-```
+```bash
 sudo apt install cmake gettext lua5.1 liblua5.1-0-dev
 ```
 
@@ -526,8 +564,15 @@ machine independent
 <br>
 <br>
 
-There are most certainly I just have come to the conclusion that its not what I
-like
+Ansible can be real great.  It "seems" easier to maintain than having a bunch
+of bash scripts for each operating system.  It can also make automating your
+setup a bit easier.
+
+<br>
+<br>
+
+But for me... its a no at this point.  I prefer a single script that i control
++ some basic convention.  Convention over configuration is a mantra i support
 
 <br>
 <br>

@@ -4,7 +4,9 @@ description: "what about all the dot files?"
 ---
 
 ## We only have talked about getting the software up
-What about dotfiles?
+What about dotfiles...
+What about configuration...
+WHAT ABOUT MY CUSTOMIZATIONS
 
 <br>
 <br>

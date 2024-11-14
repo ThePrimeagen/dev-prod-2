@@ -36,20 +36,13 @@ The name is ThePrimeagen
 <br>
 
 <a href="https://youtube.com/ThePrimeTimeagen">
-    ThePrimeTimeagen - Engineering News
+    ThePrimeTimeagen - Hand crafted meme's and toilet
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 124" width="32" height="32">
         <path fill="#FF0000" d="M172.267 20.22c-2.029-7.717-7.974-13.786-15.69-15.814C143.915 1.135 88 1.135 88 1.135s-55.914 0-68.576 3.271c-7.717 2.029-13.662 8.097-15.691 15.814C1.135 32.882 1.135 62 1.135 62s0 29.118 2.598 41.78c2.029 7.717 7.974 13.786 15.691 15.814C32.086 122.865 88 122.865 88 122.865s55.915 0 68.577-3.271c7.716-2.028 13.661-8.097 15.69-15.814C174.865 91.118 174.865 62 174.865 62s0-29.118-2.598-41.78zM70.711 85.573V38.427l36.106 23.573-36.106 23.573z"/>
     </svg>
 </a>
 
 <br>
-
-<a href="https://youtube.com/ThePrimeagen">
-    ThePrimeagen - Hand Crafted
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 124" width="32" height="32">
-        <path fill="#FF0000" d="M172.267 20.22c-2.029-7.717-7.974-13.786-15.69-15.814C143.915 1.135 88 1.135 88 1.135s-55.914 0-68.576 3.271c-7.717 2.029-13.662 8.097-15.691 15.814C1.135 32.882 1.135 62 1.135 62s0 29.118 2.598 41.78c2.029 7.717 7.974 13.786 15.691 15.814C32.086 122.865 88 122.865 88 122.865s55.915 0 68.577-3.271c7.716-2.028 13.661-8.097 15.69-15.814C174.865 91.118 174.865 62 174.865 62s0-29.118-2.598-41.78zM70.711 85.573V38.427l36.106 23.573-36.106 23.573z"/>
-    </svg>
-</a>
 
 <br>
 <br>
@@ -93,12 +86,38 @@ pretty good.  I only have one thing I optimize which is productivity.
 <br>
 <br>
 
+## Enqueue Midwit meme
+> BUT WHAT ABOUT i3-gaps, WHAT ABOUT ALL THE RICES
+
+Honestly, I don't care.  I just don't care at all.  I just want to get where i
+want to be in the fewest amount of keystrokes
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 ## A bit of prereq
 One thing that should be apparent is that i will be approaching this class from
 a unix perspective.
 
 Its not that i don't think windows is good for dev, its just I never use it for
 anything but games.
+
+### Enqueue I Don't even think of you meme
 
 <br>
 <br>

@@ -5,24 +5,15 @@ description: "its one of the best past times"
 
 ## Reinvent the wheel
 I love reinventing the wheel.  There are many reasons why i like doing it too!
-* its great for learning
-* sometimes what you want doesn't really fit any solution
 
 <br>
 <br>
 
-That is ok.  Its ok that you have to recreate something that exists in some
-form.  Its ok because you will understand it much better and you may end up
-creating something that is way more useful to you,
-
-<br>
-<br>
-
-### or you will gain
+### You will gain
 * a new appreciation of what it takes to create software
 * learn a bunch about the topic along the way
-* become a better engineer yourself
-* never do that again!  Meaning you will now be able to guage problems more accurately
+* become a better engineer yourself, meaning you will now be able to guage
+  problems more accurately
 
 <br>
 <br>
@@ -67,11 +58,18 @@ becoming a meme of the continually pursuit of perfection.
 <br>
 
 ## Lets set some goals
-* I want to be able to bootstrap any machine i will purchase in the future that is ubuntu based.
-  * i am not going to be clever and try to do a multiOS style, though this isn't hard its just tedious
+* I want to be able to bootstrap any machine i will purchase in the future that
+  is ubuntu based.
+  * i am not going to be clever and try to do a multiOS style, though this
+    isn't hard its just tedious
+  * if i need a mac install script i am sure i can create a mac version
 * I want to be able to install all my favorite libraries
 * I want the repos that i actively maintained brought down
 * I want to be able to build neovim from source
+* I want all the tools i use available
+* I want my dotfiles to be my environment hydration
+* I want to have a server that delivers down a quick script to download and
+  execute my env
 
 <br>
 <br>
@@ -93,7 +91,27 @@ becoming a meme of the continually pursuit of perfection.
 
 ## I just want it all
 I really just want to automate my system with the greatest automation language
-of all time... bash...
+of all time...
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+bash
 
 <br>
 <br>
@@ -115,9 +133,15 @@ of all time... bash...
 
 ## Rolling out own
 There are other versions of this exact same project that is someone elses
-version, Dotbot to name one of them.  I want to emphasize that I think the more
-you own of your system the better it will be because its exactly the way you
-want it.  You have the power to fashion it the way you want!
+version.  I want to emphasize that I think the more you own of your system the
+better it will be because its exactly the way you want it.  You have the power
+to fashion it the way you want!
+
+<br>
+<br>
+
+But i am not foolish, this is also a double edge sword where you have to
+maintain and improve your own system to make continue to make it great.
 
 <br>
 <br>
@@ -160,8 +184,30 @@ organized so the scripts will be located in a subdirectory called `runs`
 <br>
 <br>
 
+## My version
+If you want to check out my final version of this product, check out my repo
+named [dev](https://github.com/theprimeagen/dev)
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 ## Argument parsing and script setup
-Lets setup the basic of the script for this:
+Now we need to write the ackshual run script
 
 *Perhaps a bit of white boarding could be useful here...*
 
@@ -173,7 +219,8 @@ Lets setup the basic of the script for this:
 <br>
 
 ### Start simple
-* code up something that allows us to know the current directory and take in 1 argument for filtering of tasks
+* code up something that allows us to know the current directory and take in 1
+argument for filtering of tasks
 
 <br>
 <br>
@@ -200,9 +247,9 @@ Lets setup the basic of the script for this:
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 echo "$script_dir"
 
-grep="$1"
+filter="$1"
 
-echo "Run: dir $script_dir -- grep \"$grep\""
+echo "Run: dir $script_dir -- filter \"$filter\""
 ```
 
 <br>
@@ -328,6 +375,8 @@ But what if we need to debug this bash script?  We don't really have a way
 other than add a bunch of print statements and potentially run some side
 effects we were not expecting
 
+We need a `dry_run`
+
 <br>
 <br>
 <br>
@@ -441,7 +490,7 @@ We now have a script that is easily extensible for setting up our environment
 * Bash sort of sucks..
 * Keeping things up date is easy to forget
 * Making it OS independent is a bit of a pain in the ass
-  * i would argue equally painful as ansible
+  * i would argue its easier and up to as hard as ansible
 
 <br>
 <br>

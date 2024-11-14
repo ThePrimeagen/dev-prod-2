@@ -10,6 +10,7 @@ development process.
 How you install your favorite libraries
 How you interact with your operating system to get you where you want to be
 How you arrange your windows
+How you arrange your screens (desktops?)
 
 <br>
 <br>
