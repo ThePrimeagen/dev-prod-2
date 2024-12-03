@@ -3,7 +3,7 @@
     "license": "(CC-BY-NC-4.0 OR Apache-2.0)",
     "author": {
         "Brian Holt": "creator of the course stacreator of the course starter <btholt+next-course-starter@gmail.com>rter <btholt+next-course-starter@gmail.com>",
-        "ThePrimeagen": "the course creator",
+        "ThePrimeagen": "the course creator"
     },
     "scripts": {
         "dev": "next dev",
