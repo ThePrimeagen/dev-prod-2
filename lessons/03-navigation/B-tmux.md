@@ -1,10 +1,11 @@
 ---
-title: "Navigation"
+title: "Tmux"
 description: "tmux is a great way to navigate around the terminal"
 ---
 
 ## The Terminal Experience
 I have a list of things i want in my terminal to make it useful and it all is
+
 centered around navigation.
 
 ### What I Want

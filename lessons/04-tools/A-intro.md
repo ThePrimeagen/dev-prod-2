@@ -1,5 +1,5 @@
 ---
-title: "Tools"
+title: "Intro"
 description: "The best of the best"
 ---
 
@@ -12,7 +12,7 @@ your life
 <br>
 
 I cannot tell you how many times in my earlier life i wrote a program that one
-small life of bash could have taken care of for me.  Just knowing your tools is
+small line of bash could have taken care of for me.  Just knowing your tools is
 a massive advantage in developer life.
 
 <br>

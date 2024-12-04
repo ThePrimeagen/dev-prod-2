@@ -4,8 +4,8 @@ description: "jq a hidden treasure"
 ---
 
 ## JQ
-Another hidden treasure in the family of CLI tools.  This one has personaly
-saved me so much time its hard to quantify
+JQ, the hidden treasure in the family of CLI tools.  This one has personaly
+saved me so much time its hard to qualify just how important it is
 
 <br>
 <br>

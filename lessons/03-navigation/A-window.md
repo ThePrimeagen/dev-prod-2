@@ -1,5 +1,5 @@
 ---
-title: "Navigation"
+title: "Window Managers"
 description: "window managers"
 ---
 
