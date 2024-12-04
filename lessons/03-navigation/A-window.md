@@ -82,19 +82,11 @@ I approach everything from here on out.
 ## What is a window manager?
 This will really depend on the window manager you use.
 
-<br>
-<br>
-
-TODO: Get a bit of information here
-Pop!_OS's built in window manager allows for you to manage windows but still
-remain in Pop!_OS whereas i3 will strip everything of the default ubuntu
-experience.
-
-<br>
-<br>
-
-TODO: get a bit of information about this Mac's window manager Yabai helps you
-organize your windows without having to have tons
+* pop os
+* i3
+* awesomewm
+* leftwm
+* yabai (mac)
 
 <br>
 <br>

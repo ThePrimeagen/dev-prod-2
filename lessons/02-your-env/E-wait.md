@@ -41,14 +41,6 @@ script to run, we just need one script that sets up our environment!
 
 <br>
 <br>
-
-One thing I did very intenionally was the `find` command in our previous
-script.  It only finds `executables` within the first directory.  Nothing else.
-This is good because that means if we have subdirectories they will not be
-searched in
-
-<br>
-<br>
 <br>
 <br>
 <br>
@@ -75,6 +67,8 @@ searched in
 ### Lets do this!
 * whiteboard time!
 * code time!
+* lets start by getting the basics of the script ready
+  * dry run
 
 <br>
 <br>
@@ -95,55 +89,94 @@ searched in
 <br>
 
 ## Expected Code
-
-* create a directory called `env` within the directory
-* within this directory put all of your environement
-
 ```bash
 #!/usr/bin/env bash
-dry_run="0"
-script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 
-if [[ $1 == "--dry" ]]; then
-    dry_run="1"
-fi
+script_dir="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)"
+dry="0"
+
+while [[ $# > 0 ]]; do
+    if [[ "$1" == "--dry" ]]; then
+        dry="1"
+    fi
+    shift
+done
 
 log() {
-    if [[ $dry_run == "1" ]]; then
-        echo "[DRY_RUN]: $1"
+    if [[ $dry == "1" ]]; then
+        echo "[DRY_RUN]: $@"
     else
-        echo "$1"
+        echo "$@"
     fi
 }
 
-log "env: $script_dir"
+execute() {
+    log "execute: $@"
+    if [[ $dry == "1" ]]; then
+        return
+    fi
 
-update_files() {
-    log "copying over files from: $1"
-    pushd $1 &> /dev/null
-    (
-        configs=`find . -mindepth 1 -maxdepth 1 -type d`
-        for c in $configs; do
-            directory=${2%/}/${c#./}
-            log "    removing: rm -rf $directory"
-
-            if [[ $dry_run == "0" ]]; then
-                rm -rf $directory
-            fi
-
-            log "    copying env: cp $c $2"
-            if [[ $dry_run == "0" ]]; then
-                cp -r ./$c $2
-            fi
-        done
-
-    )
-    popd &> /dev/null
+    "$@"
 }
 
-pushd $script_dir &> /dev/null
-update_files env/.config $XDG_CONFIG_HOME
-popd &> /dev/null
+log "--------- dev-env ---------"
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Copy time
+Lets create the copy function that will bring over every source directory to
+the target directory
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Expected code
+```bash
+cd $script_dir
+copy_dir() {
+    pushd $1
+    to=$2
+    dirs=$(find . -maxdepth 1 -mindepth 1 -type d)
+    for dir in $dirs; do
+        execute rm -rf $to/$dir
+        execute cp -r $dir $to/$dir
+    done
+    popd
+}
+
+copy_dir .config $XDG_CONFIG_HOME
 ```
 
 <br>
@@ -165,9 +198,59 @@ popd &> /dev/null
 <br>
 
 ## And just like that
-Lets test to make sure its working the way i expect it to!
+We have ourselves a way to copy over directories for all of our programs... but
+what about one off scripts?
 
-Always dry-run first btw (or else you would be sad)
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Expected Code
+```bash
+copy_file() {
+    file=$1
+    to=$2
+    execute rm $to/$file
+    execute cp $file $to
+}
+
+copy_file .specialrc ~/
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## We make things bigger than they are
+this will solve about 99% of all dotfile management issues.
 
 <br>
 <br>

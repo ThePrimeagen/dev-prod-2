@@ -67,9 +67,7 @@ becoming a meme of the continually pursuit of perfection.
 * I want the repos that i actively maintained brought down
 * I want to be able to build neovim from source
 * I want all the tools i use available
-* I want my dotfiles to be my environment hydration
-* I want to have a server that delivers down a quick script to download and
-  execute my env
+* I want to copy all my dotfiles over to my env.  i like them separated.
 
 <br>
 <br>
@@ -207,7 +205,9 @@ named [dev](https://github.com/theprimeagen/dev)
 <br>
 
 ## Argument parsing and script setup
-Now we need to write the ackshual run script
+Now we need to write the ackshual run script.  Lets start with first creating
+the dev environment.  Meaning getting the libraries, projects, editor, etc etc
+that we want on our machine.
 
 *Perhaps a bit of white boarding could be useful here...*
 
@@ -299,18 +299,18 @@ echo "Run: dir $script_dir -- filter \"$filter\""
 
 ```bash
 # ... previous section ...
+script_dir="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)"
+filter="$1"
 
-pushd @script_dir 2> /dev/null
-scripts=`find runs2 -maxdepth 1 -mindepth 1 -executable`
-popd 2> /dev/null
+cd $script_dir
+scripts=$(find runs -maxdepth 1 -mindepth 1 -executable -type f)
 
-for s in $scripts; do
-    if echo $s | grep -vq "$grep"; then
-        echo "filtering: $s"
+for script in $scripts; do
+    if echo "$script" | grep -qv "$filter"; then
+        echo "filtered: $filter -- $script"
         continue
     fi
-
-    ./$scripts_dir/$s
+    ./$script
 done
 ```
 
@@ -375,7 +375,7 @@ But what if we need to debug this bash script?  We don't really have a way
 other than add a bunch of print statements and potentially run some side
 effects we were not expecting
 
-We need a `dry_run`
+We need a `dry_run`, so lets write it now!
 
 <br>
 <br>
@@ -401,45 +401,48 @@ Here is the full code up to this point
 ```bash
 #!/usr/bin/env bash
 
-script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-echo "$script_dir"
-
-grep=""
+script_dir="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)"
+filter=""
 dry="0"
 
+cd $script_dir
+scripts=$(find runs -maxdepth 1 -mindepth 1 -executable -type f)
+
 while [[ $# > 0 ]]; do
-    if [[ $1 == "--dry" ]]; then
+    if [[ "$1" == "--dry" ]]; then
         dry="1"
     else
-        grep=$1
+        filter="$1"
     fi
     shift
 done
 
 log() {
     if [[ $dry == "1" ]]; then
-        echo "[DRY_RUN]: $1"
+        echo "[DRY_RUN]: $@"
     else
-        echo $1
+        echo "$@"
     fi
 }
 
-log "run \$grep \"$grep\""
+execute() {
+    log "execute: $@"
+    if [[ $dry == "1" ]]; then
+        return
+    fi
 
-pushd @script_dir 2> /dev/null
-scripts=`find runs2 -maxdepth 1 -mindepth 1 -executable`
-popd 2> /dev/null
+    "$@"
+}
 
-for s in $scripts; do
-    if echo $s | grep -vq "$grep"; then
-        log "filtering: $s"
+log "run: filter=$filter"
+
+for script in $scripts; do
+    if echo "$script" | grep -qv "$filter"; then
+        log "filtered: $filter -- $script"
         continue
     fi
-
-    log "executing: $scripts_dir/$s"
-    if [[ $dry == "0" ]]; then
-        ./$scripts_dir/$s
-    fi
+    log "running script: $script"
+    execute ./$script
 done
 ```
 
@@ -489,6 +492,8 @@ We now have a script that is easily extensible for setting up our environment
 ## Some cons
 * Bash sort of sucks..
 * Keeping things up date is easy to forget
+  * this is also why i always copy my environment.  i never edit the env files
+  directly.  A good habit for me
 * Making it OS independent is a bit of a pain in the ass
   * i would argue its easier and up to as hard as ansible
 

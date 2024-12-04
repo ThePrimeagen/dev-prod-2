@@ -7,15 +7,15 @@ description: "tmux is a great way to navigate around the terminal"
 I have a list of things i want in my terminal to make it useful and it all is
 centered around navigation.
 
-* to gimp! *
-
-## What I Want
+### What I Want
 1. sessions that last even when i close my terminal
 1. multiple running sessions, and these sessions are based on directory
 1. "tabs" within a session
 1. navigate to any session by directory name "instantly"
 1. navigate to any session by directory with fuzzy find
 1. run scripts or whatever programs i want when navigating to a directory
+
+** TO GIMP **
 
 <br>
 <br>
@@ -94,7 +94,7 @@ modern
 | macOS (using MacPorts)      | `port install tmux`     |
 | openSUSE                    | `zypper install tmux`   |
 
-## Config
+### Base Config
 Here is the basic config that will make life easier.  This will ensure that you
 have a similar experience to me
 
@@ -102,10 +102,19 @@ have a similar experience to me
 set -g default-terminal "tmux-256color"
 set -s escape-time 0
 set -g base-index 1
+
+# optional -- i like C-a not C-b (pure preference)
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
+
 # <WHERE YOUR TMUX CONF GOES> = XDG_CONFIG_HOME/tmux/tmux.conf
 # <WHERE YOUR TMUX CONF GOES> = ~/.tmux.conf
 bind r source-file <WHERE YOUR TMUX CONF GOES> \; display-message "tmux.conf reloaded"
 ```
+
+### Install it via our dev-env!
+We can even use our fancy new dev-env script to install it!
 
 <br>
 <br>
@@ -129,13 +138,45 @@ bind r source-file <WHERE YOUR TMUX CONF GOES> \; display-message "tmux.conf rel
 Lets go through some basic commands about tmux so you can see how they work
 with just usage.  I will show you the ones I use and some that I don't use
 
-TODO: learn to do splits better
-
 * what is prefix key
-* show the tmux basics
-* tmux is controlled by a config
-  * show off a bit of that
-  * TODO: make sure i know what everything means :)
+* creating window
+* detaching
+* attaching
+* showing all running sessions
+* killing pane / window / session
+* creating and navigating splits
+    * tmux is controlled by a config
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## A bit of customization
+I like to navigate my tmux panes like i navigate my vim windows
+
+lets try this out:
+
+```bash
+# Add to your tmux.conf file
+bind -r h select-pane -L
+bind -r j select-pane -D
+bind -r k select-pane -U
+bind -r l select-pane -R
+```
 
 <br>
 <br>
@@ -189,9 +230,9 @@ A `target` is a tuple of `<session_name>[:<widx>|<wname>[.<pane_idx>]]`
 ```bash
 tmux new-session -s <sname> -n <initial wname> -d[etach]
 tmux list-sessions
-tmux attach-session -t <target> # show some of the goofiness of this
-tmux has-session -t <target>    # show the danger
-                                # lets develop has_session
+tmux attach-session -t <target>
+tmux has-session -t <target> # don't forget -t vs -t=
+tmux switch-client -t <target>
 ```
 
 <br>
@@ -263,9 +304,21 @@ tmux send-keys -t <target> "text" [ctrl keys,...]
 <br>
 
 ## Lets start with our first script
+From my original points, we still have 4 points left to address to create the
+"perfect" navigation system for the terminal
+
+### What I Want
+1. DONE :: sessions that last even when i close my terminal
+1. multiple running sessions, and these sessions are based on directory
+1. DONE :: "tabs" within a session
+1. navigate to any session by directory name "instantly"
+1. navigate to any session by directory with fuzzy find
+1. run scripts or whatever programs i want when navigating to a directory
+
+## Lets Address Point 6 First
+This is one of the easier points to address
 
 * opens and creates the configuration you want for a project
-* link it to a remap key in our tmux conf
 
 <br>
 <br>
@@ -290,17 +343,11 @@ tmux send-keys -t <target> "text" [ctrl keys,...]
 ```bash
 #!/usr/bin/env bash
 
-if [ ! -z .tmux-ready ]; then
-    return
+if [[ -x ./.ready-tmux ]]; then
+    ./.ready-tmux
+elif [[ -x ~/.ready-tmux ]]; then
+    ~/.ready-tmux
 fi
-
-./.tmux-ready
-```
-
-```bash
-# in tmux.conf
-...
-bind S tmux-ready
 ```
 
 <br>
@@ -323,7 +370,7 @@ bind S tmux-ready
 
 ## Thats pretty cool?
 That was pretty awesome that we can create all the windows / splits we want
-with a simple flick of the wrist
+with a simple script (don't worry, it'll get a lot better)
 
 <br>
 <br>
@@ -349,8 +396,9 @@ experience
 
 > 6. run scripts or whatever programs i want when navigating to a directory
 
-But we still have a couple left
+But we still have a few left
 
+> 2. multiple running sessions, and these sessions are based on directory
 > 4. navigate to any session by directory name "instantly"
 > 5. navigate to any session by directory with fuzzy find
 
@@ -478,6 +526,7 @@ output
 <br>
 
 ## Lets solve the last problems
+> 2. multiple running sessions, and these sessions are based on directory
 > 4. navigate to any session by directory name "instantly"
 > 5. navigate to any session by directory with fuzzy find
 
@@ -488,7 +537,8 @@ some sort of subset.
 * We want to navigate based on the results of FZF
 
 ### CODE TIME!!
-lets write this MF script (MF = Mother FZF) where we get a selected directory from fzf.
+Lets start this MF script (MF = Mother FZF):
+* get a selected directory from fzf.
 
 <br>
 <br>
@@ -517,8 +567,12 @@ echo "selected!! $selected"
 ```
 
 ### Ok, lets do some great things
-Lets create tmux sessions based on our newly found tmux knowledge plus our fzf
-results!
+* is there a running session given name
+  * `:,.` are not allowed as session name
+  * ` ` we should also remove spaces... but if you use a space in your directory name i dislike you
+  * there are other non allowed characters, but we will not worry about them
+* if there is, navigate to that session
+* if there is not, create that session and navigate to it
 
 <br>
 <br>
@@ -543,34 +597,24 @@ results!
 ```bash
 #!/usr/bin/env bash
 
-selected=$(find ~/personal -mindepth 1 -maxdepth 1 -type d | fzf)
-
+selected=$(find ~/personal ~/ ~/.config -maxdepth 1 -mindepth 1 -type d | fzf)
 if [[ -z "$selected" ]]; then
     exit 0
 fi
+selected_name=$(basename "$selected" | tr ",.: " "____")
 
-selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
+if tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux switch-client -t=$selected_name
+    exit 0
+fi
 
-switch_to() {
-    if [[ -z $TMUX ]]; then
-        tmux attach-session -t=$1
-    else
-        tmux switch-client -t=$1
-    fi
-}
-
-# no tmux currently running, or tmux running, just not in this terminal
-if [[ -z "$TMUX" ]] && [[ -z $tmux_running ]]; then
+if [[ -z "$TMUX" ]]; then
     tmux new-session -s $selected_name -c $selected
     exit 0
 fi
 
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name -c $selected
-fi
-
-switch_to $selected_name
+tmux new-session -ds $selected_name -c $selected
+tmux switch-client -t $selected_name
 ```
 
 <br>
@@ -616,44 +660,47 @@ It would be nice if we could combine our two scripts...
 ```bash
 #!/usr/bin/env bash
 
-selected=$(find ~/personal -mindepth 1 -maxdepth 1 -type d | fzf)
-
+selected=$(find ~/personal ~/ ~/.config -maxdepth 1 -mindepth 1 -type d | fzf)
 if [[ -z "$selected" ]]; then
     exit 0
 fi
+selected_name=$(basename "$selected" | tr ",.: " "____")
 
-selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
-
-switch_to() {
-    if [[ -z $TMUX ]]; then
-        tmux attach-session -t=$1
-    else
-        tmux switch-client -t=$1
-    fi
-}
-
-hydrate() {
-    if [ -z $selected/.tmux-ready ]; then
-        return
-    fi
-
-    tmux send-keys -t $selected_name "./.tmux-ready" c-M
-}
-
-# no tmux currently running, or tmux running, just not in this terminal
-if [[ -z "$TMUX" ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected
+if tmux has-session -t=$selected_name 2> /dev/null; then
+    tmux switch-client -t=$selected_name
     exit 0
 fi
 
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
+if [[ -z "$TMUX" ]]; then
+    tmux new-session -s $selected_name -c $selected
+else
     tmux new-session -ds $selected_name -c $selected
+    tmux switch-client -t $selected_name
 fi
-
-switch_to $selected_name
-hydrate
+tmux send-keys -t $selected_name "ready-tmux"
 ```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## How do i execute this?
+* we copy it to a $PATH location
+* we can create a tmux shortcut to execute it
 
 <br>
 <br>
