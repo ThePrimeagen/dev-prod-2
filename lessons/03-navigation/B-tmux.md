@@ -16,8 +16,6 @@ centered around navigation.
 1. navigate to any session by directory with fuzzy find
 1. run scripts or whatever programs i want when navigating to a directory
 
-** TO GIMP **
-
 <br>
 <br>
 <br>
@@ -109,6 +107,11 @@ unbind C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
 
+# vi key movement for copy/pasta mode
+set-window-option -g mode-keys vi
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
+
 # <WHERE YOUR TMUX CONF GOES> = XDG_CONFIG_HOME/tmux/tmux.conf
 # <WHERE YOUR TMUX CONF GOES> = ~/.tmux.conf
 bind r source-file <WHERE YOUR TMUX CONF GOES> \; display-message "tmux.conf reloaded"
@@ -139,7 +142,10 @@ We can even use our fancy new dev-env script to install it!
 Lets go through some basic commands about tmux so you can see how they work
 with just usage.  I will show you the ones I use and some that I don't use
 
-* what is prefix key
+ource /home/theprimeagen/.tmux-sessionizer
+what is prefix key
+
+### just using <prefix>-* commands
 * creating window
 * detaching
 * attaching
@@ -309,17 +315,40 @@ From my original points, we still have 4 points left to address to create the
 "perfect" navigation system for the terminal
 
 ### What I Want
-1. DONE :: sessions that last even when i close my terminal
+1. ~~sessions that last even when i close my terminal~~
 1. multiple running sessions, and these sessions are based on directory
-1. DONE :: "tabs" within a session
+1. ~~"tabs" within a session~~
 1. navigate to any session by directory name "instantly"
 1. navigate to any session by directory with fuzzy find
 1. run scripts or whatever programs i want when navigating to a directory
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 ## Lets Address Point 6 First
-This is one of the easier points to address
+This is one of the easier points to address (a bit weird)
+
+```
+6. run scripts or whatever programs i want when navigating to a directory
+```
 
 * opens and creates the configuration you want for a project
+** gimp **
 
 <br>
 <br>
@@ -338,6 +367,7 @@ This is one of the easier points to address
 <br>
 <br>
 <br>
+
 
 ## Opener script
 
@@ -349,6 +379,7 @@ if [[ -x ./.ready-tmux ]]; then
 elif [[ -x ~/.ready-tmux ]]; then
     ~/.ready-tmux
 fi
+clear
 ```
 
 <br>
@@ -395,7 +426,8 @@ with a simple script (don't worry, it'll get a lot better)
 We have checked off another component of what I consider a great terminal
 experience
 
-> 6. run scripts or whatever programs i want when navigating to a directory
+<br>
+<br>
 
 But we still have a few left
 
@@ -540,6 +572,7 @@ some sort of subset.
 ### CODE TIME!!
 Lets start this MF script (MF = Mother FZF):
 * get a selected directory from fzf.
+* create a clean tmux session name
 
 <br>
 <br>
@@ -564,14 +597,14 @@ Lets start this MF script (MF = Mother FZF):
 #!/usr/bin/env bash
 
 selected=$(find ~/personal -mindepth 1 -maxdepth 1 -type d | fzf)
-echo "selected!! $selected"
+if [[ -z "$selected" ]]; then
+    exit 0
+fi
+selected_name=$(basename $selected | tr ".,: " "____")
+echo "selected!! $selected -- selected_name $selected_name"
 ```
 
-### Ok, lets do some great things
-* is there a running session given name
-  * `:,.` are not allowed as session name
-  * ` ` we should also remove spaces... but if you use a space in your directory name i dislike you
-  * there are other non allowed characters, but we will not worry about them
+### Lets make the script gooooood
 * if there is, navigate to that session
 * if there is not, create that session and navigate to it
 
@@ -598,24 +631,26 @@ echo "selected!! $selected"
 ```bash
 #!/usr/bin/env bash
 
-selected=$(find ~/personal ~/ ~/.config -maxdepth 1 -mindepth 1 -type d | fzf)
+selected=$(find ~/personal -maxdepth 1 -mindepth 1 -type d | fzf)
 if [[ -z "$selected" ]]; then
     exit 0
 fi
-selected_name=$(basename "$selected" | tr ",.: " "____")
+selected_name=$(basename $selected | tr ".,: " "____")
 
-if tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux switch-client -t=$selected_name
-    exit 0
+switch_to() {
+    if [[ -z "$TMUX" ]]; then
+        tmux attach-session -t $selected_name
+    else
+        tmux switch-client -t $selected_name
+    fi
+}
+
+if tmux has-session -t="$selected_name"; then
+    switch_to
+else
+    tmux new-session -ds $selected_name -c $selected
+    switch_to
 fi
-
-if [[ -z "$TMUX" ]]; then
-    tmux new-session -s $selected_name -c $selected
-    exit 0
-fi
-
-tmux new-session -ds $selected_name -c $selected
-tmux switch-client -t $selected_name
 ```
 
 <br>
@@ -636,7 +671,7 @@ tmux switch-client -t $selected_name
 <br>
 <br>
 
-## Combine our two scripts
+## Remember our previous scriptedy-tmux
 It would be nice if we could combine our two scripts...
 
 <br>
@@ -661,24 +696,29 @@ It would be nice if we could combine our two scripts...
 ```bash
 #!/usr/bin/env bash
 
-selected=$(find ~/personal ~/ ~/.config -maxdepth 1 -mindepth 1 -type d | fzf)
+selected=$(find ~/personal -maxdepth 1 -mindepth 1 -type d | fzf)
 if [[ -z "$selected" ]]; then
     exit 0
 fi
-selected_name=$(basename "$selected" | tr ",.: " "____")
+selected_name=$(basename $selected | tr ".,: " "____")
 
-if tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux switch-client -t=$selected_name
-    exit 0
-fi
+switch_to() {
+    if [[ -z "$TMUX" ]]; then
+        tmux attach-session -t $selected_name
+    else
+        tmux switch-client -t $selected_name
+    fi
 
-if [[ -z "$TMUX" ]]; then
-    tmux new-session -s $selected_name -c $selected
+    tmux send-keys -t $selected_name "ready-tmux"
+    tmux send-keys -t $selected_name "welcome to fem"
+}
+
+if tmux has-session -t="$selected_name"; then
+    switch_to
 else
     tmux new-session -ds $selected_name -c $selected
-    tmux switch-client -t $selected_name
+    switch_to
 fi
-tmux send-keys -t $selected_name "ready-tmux"
 ```
 
 <br>

@@ -114,6 +114,27 @@ realize that you are just working on a "server."
 <br>
 <br>
 
+## NOTE: feel free to just watch
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
 ## Install ansible
 as all adventures start...
 
@@ -415,22 +436,9 @@ Your code should look something like this
 ## OH NO! Crash!
 If you are using apt and have to use sudo you should see the following error.
 
-```
-<127.0.0.1> ESTABLISH LOCAL CONNECTION FOR USER: theprimeagen
-<127.0.0.1> EXEC /bin/sh -c 'echo ~theprimeagen && sleep 0'
-<127.0.0.1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/theprimeagen/.ansible/tmp `"&& mkdir "` echo /home/theprimeagen/.ansible/tmp/ansible-tmp-1729644436.258113-1776352-80352927742333 `" && echo ansible-tmp-1729644436.258113-1776352-80352927742333="` echo /home/theprimeagen/.ansible/tmp/ansible-tmp-1729644436.258113-1776352-80352927742333 `" ) && sleep 0'
-Using module file /usr/lib/python3/dist-packages/ansible/modules/apt.py
-<127.0.0.1> PUT /home/theprimeagen/.ansible/tmp/ansible-local-1776140pp0cn_gm/tmp33hhis1k TO /home/theprimeagen/.ansible/tmp/ansible-tmp-1729644436.258113-1776352-80352927742333/AnsiballZ_apt.py
-<127.0.0.1> EXEC /bin/sh -c 'chmod u+x /home/theprimeagen/.ansible/tmp/ansible-tmp-1729644436.258113-1776352-80352927742333/ /home/theprimeagen/.ansible/tmp/ansible-tmp-1729644436.258113-1776352-80352927742333/AnsiballZ_apt.py && sleep 0'
-<127.0.0.1> EXEC /bin/sh -c 'sudo -H -S -n  -u root /bin/sh -c '"'"'echo BECOME-SUCCESS-rgqphadrxzwvmzhucbtnjvxefbemoqpt ; /usr/bin/python3 /home/theprimeagen/.ansible/tmp/ansible-tmp-1729644436.258113-1776352-80352927742333/AnsiballZ_apt.py'"'"' && sleep 0'
-<127.0.0.1> EXEC /bin/sh -c 'rm -f -r /home/theprimeagen/.ansible/tmp/ansible-tmp-1729644436.258113-1776352-80352927742333/ > /dev/null 2>&1 && sleep 0'
-fatal: [localhost]: FAILED! => {
-    "changed": false,
-    "module_stderr": "sudo: a password is required\n",
-    "module_stdout": "",
-    "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error",
-    "rc": 1
-}
+```bash
+TASK [Install neovim's deps] *********************************************************
+fatal: [localhost]: FAILED! => {"changed": false, "module_stderr": "sudo: a password is required\n", "module_stdout": "", "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error", "rc": 1}
 ```
 
 Well ansible does have the ability to become the sudo but it needs the creds to

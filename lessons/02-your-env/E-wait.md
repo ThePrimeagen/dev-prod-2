@@ -222,10 +222,11 @@ what about one off scripts?
 ## Expected Code
 ```bash
 copy_file() {
-    file=$1
+    from=$1
     to=$2
-    execute rm $to/$file
-    execute cp $file $to
+    name=$(basename $from)
+    execute rm $from
+    execute cp $from $to/$name
 }
 
 copy_file .specialrc ~/

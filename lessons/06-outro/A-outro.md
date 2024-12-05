@@ -3,6 +3,30 @@ title: "Outro"
 description: "goodbye"
 ---
 
+## Why no AI?
+there are two important reasons why i didn't go over AI in this course.
+1. i see this rise of behavior in devs "learned helplessness"
+1. the products are just moving so fast
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
 ## And this is it
 Its the joy of making a better experience that helps keep me engaged as a dev.
 

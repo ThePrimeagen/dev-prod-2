@@ -5,8 +5,9 @@ description: "your most used tool is the editor"
 
 ## Lets start with your editor
 Now i am going to show you around neovim, not because you are going to use
-neovim, but its good understand just how hackable it is and perhaps you will be
-willing to try it
+neovim, or that i am trying to convince you to use neovim.  You should use
+neovim because you want to explore other ways of editing. Also, its good
+understand just how hackable it is and perhaps you will be willing to try it
 
 <br>
 <br>
@@ -96,6 +97,7 @@ over the last few years.
 * macros
 * commands
 * help
+* your first init script
 
 <br>
 <br>

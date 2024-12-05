@@ -14,8 +14,11 @@ With ansible we:
 
 Lets build the same thing, but in the bash script now!
 
+```
 gituah: git@github.com:neovim/neovim.git <br>
 deps: cmake gettext lua5.1 liblua5.1-0-dev
+make: make CMAKE_BUILD_TYPE=RelWithDebInfo
+```
 
 <br>
 <br>

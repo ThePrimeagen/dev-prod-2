@@ -30,6 +30,7 @@ transformation with them.
 
 * lets replace `foo` with `bar`
 * lets replace `foo` or `bar` with `foo,foo` or `bar,bar`
+* show how its like vim find / replace
 
 ```bash
 ➜  dev-prod-2 git:(main) cat out | sed 's/: "\(.*\)",/: "\1,\1",/'
@@ -157,7 +158,8 @@ now lets use parallel to control how fast it requests
 <br>
 
 ## Just a touch of awk
-I don't know a lot of awk and you can do quite a bit, but the little i do know is really good
+I don't know a lot of awk and you can do quite a bit, but the little i do know
+is really good
 
 ```bash
 ➜  dev-prod-2 git:(main) ✗ ps aux | grep vim | awk '{ sum += $2 } END { print sum }'
